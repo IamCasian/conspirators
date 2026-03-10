@@ -1,0 +1,30 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "static/images"
+public_folder: "/images"
+
+locale: it
+
+collections:
+  - name: "posts"
+    label: "Articoli"
+    folder: "content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Titolo", name: "title", widget: "string" }
+      - { label: "Data di pubblicazione", name: "date", widget: "datetime" }
+      - label: "Categoria"
+        name: "category"
+        widget: "select"
+        options: ["Politica", "Religione", "Salute", "Complottismo"]
+      - { label: "Estratto", name: "excerpt", widget: "text" }
+      - label: "Tag"
+        name: "tag"
+        widget: "select"
+        options: ["ESCLUSIVA", "CENSURATO", "INVESTIGAZIONE", "ANALISI", "DOCUMENTI", "URGENTE"]
+      - { label: "Immagine di copertina", name: "thumbnail", widget: "image", required: false }
+      - { label: "Contenuto", name: "body", widget: "markdown" }
+      - { label: "In evidenza in homepage", name: "featured", widget: "boolean", default: false }
