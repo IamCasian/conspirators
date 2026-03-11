@@ -5,26 +5,25 @@ backend:
 media_folder: "static/images"
 public_folder: "/images"
 
-locale: it
+locale: en
 
 collections:
   - name: "posts"
-    label: "Articoli"
+    label: "Articles"
     folder: "content/posts"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - { label: "Titolo", name: "title", widget: "string" }
-      - { label: "Data di pubblicazione", name: "date", widget: "datetime" }
-      - label: "Categoria"
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - label: "Category"
         name: "category"
         widget: "select"
-        options: ["Politica", "Religione", "Salute", "Complottismo"]
-      - { label: "Estratto", name: "excerpt", widget: "text" }
+        options: ["Politics", "Religion", "Health", "Conspiracies"]
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
       - label: "Tag"
         name: "tag"
         widget: "select"
-        options: ["ESCLUSIVA", "CENSURATO", "INVESTIGAZIONE", "ANALISI", "DOCUMENTI", "URGENTE"]
-      - { label: "Immagine di copertina", name: "thumbnail", widget: "image", required: false }
-      - { label: "Contenuto", name: "body", widget: "markdown" }
-      - { label: "In evidenza in homepage", name: "featured", widget: "boolean", default: false }
+        options: ["EXCLUSIVE", "CENSORED", "INVESTIGATION", "ANALYSIS", "DOCUMENTS", "URGENT"]
+      - { label: "Content", name: "body", widget: "markdown" }
+      - { label: "Featured on homepage", name: "featured", widget: "boolean", default: false }
