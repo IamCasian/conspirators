@@ -401,5 +401,16 @@
     const ticker = document.getElementById('ticker');
     ticker.innerHTML += ticker.innerHTML;
   </script>
+  <script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/";
+        });
+      }
+    });
+  }
+</script>
 </body>
 </html>
