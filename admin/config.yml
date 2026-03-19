@@ -2,28 +2,41 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "static/images"
-public_folder: "/images"
-
-locale: en
+media_folder: "uploads"
+public_folder: "/uploads"
 
 collections:
-  - name: "posts"
-    label: "Articles"
-    folder: "content/posts"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Date", name: "date", widget: "datetime" }
-      - label: "Category"
-        name: "category"
-        widget: "select"
-        options: ["Politics", "Religion", "Health", "Conspiracies"]
-      - { label: "Excerpt", name: "excerpt", widget: "text" }
-      - label: "Tag"
-        name: "tag"
-        widget: "select"
-        options: ["EXCLUSIVE", "CENSORED", "INVESTIGATION", "ANALYSIS", "DOCUMENTS", "URGENT"]
-      - { label: "Content", name: "body", widget: "markdown" }
-      - { label: "Featured on homepage", name: "featured", widget: "boolean", default: false }
+  - name: "encyclopedia"
+    label: "Encyclopedia Data"
+    editor:
+      preview: false
+    files:
+      - file: "data/topics.json"
+        label: "Topics Overview"
+        name: "topics_overview"
+        extension: "json"
+        format: "json"
+        fields:
+          - label: "Topics List"
+            name: "topics"
+            widget: "list"
+            fields:
+              - label: "Topic Name"
+                name: "name"
+                widget: "string"
+              - label: "URL Slug"
+                name: "slug"
+                widget: "string"
+                hint: "Must be lowercase with hyphens, e.g. 'area-51'"
+              - label: "Category"
+                name: "tag"
+                widget: "select"
+                options: ["CONSPIRACIES", "POLITICS", "RELIGION", "HEALTH", "SCIENCE", "ECONOMICS", "HISTORY", "INVESTIGATION"]
+              - label: "Introduction"
+                name: "intro"
+                widget: "text"
+              - label: "Related Topics Slugs"
+                name: "related"
+                widget: "list"
+                required: false
+                field: { label: "Slug", name: "related_slug", widget: "string" }

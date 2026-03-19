@@ -642,85 +642,7 @@
     // ═══════════════════════════════════════════════════════════════
     // ENCYCLOPEDIA DATA
     // ═══════════════════════════════════════════════════════════════
-    // HOW TO ADD NEW ENTRIES:
-    // Just add a new object to the `entries` array below.
-    // Format: { name: "Entry Name", tag: "CATEGORY", slug: "url-slug" }
-    // The page will auto-sort everything alphabetically!
-    // ═══════════════════════════════════════════════════════════════
-
-    const entries = [
-      // A
-      { name: "Area 51", tag: "CONSPIRACIES", slug: "area-51" },
-      { name: "Ashkenazi Jews", tag: "HISTORY", slug: "ashkenazi-jews" },
-
-      // B
-      { name: "Bolshevism", tag: "POLITICS", slug: "bolshevism" },
-      { name: "Bilderberg Group", tag: "CONSPIRACIES", slug: "bilderberg-group" },
-
-      // C
-      { name: "Communism", tag: "POLITICS", slug: "communism" },
-      { name: "CIA Black Sites", tag: "INVESTIGATION", slug: "cia-black-sites" },
-      { name: "Chemtrails", tag: "HEALTH", slug: "chemtrails" },
-      { name: "Council on Foreign Relations", tag: "POLITICS", slug: "council-on-foreign-relations" },
-
-      // D
-      { name: "Deep State", tag: "POLITICS", slug: "deep-state" },
-      { name: "Denver Airport Murals", tag: "CONSPIRACIES", slug: "denver-airport-murals" },
-
-      // F
-      { name: "Flat Earth", tag: "SCIENCE", slug: "flat-earth" },
-      { name: "Freemasonry", tag: "RELIGION", slug: "freemasonry" },
-      { name: "Federal Reserve", tag: "ECONOMICS", slug: "federal-reserve" },
-
-      // G
-      { name: "Geoengineering", tag: "HEALTH", slug: "geoengineering" },
-
-      // H
-      { name: "HAARP", tag: "SCIENCE", slug: "haarp" },
-      { name: "Hollywood Satanism", tag: "RELIGION", slug: "hollywood-satanism" },
-
-      // I
-      { name: "Illuminati", tag: "CONSPIRACIES", slug: "illuminati" },
-
-      // J
-      { name: "Jesus Christ", tag: "RELIGION", slug: "jesus-christ" },
-      { name: "JFK Assassination", tag: "HISTORY", slug: "jfk-assassination" },
-
-      // M
-      { name: "MK-Ultra", tag: "INVESTIGATION", slug: "mk-ultra" },
-      { name: "Moon Landing Hoax", tag: "SCIENCE", slug: "moon-landing-hoax" },
-      { name: "Masonic Symbolism", tag: "RELIGION", slug: "masonic-symbolism" },
-
-      // N
-      { name: "New World Order", tag: "CONSPIRACIES", slug: "new-world-order" },
-      { name: "Nikola Tesla Cover-up", tag: "SCIENCE", slug: "nikola-tesla" },
-
-      // P
-      { name: "Project MKUltra", tag: "INVESTIGATION", slug: "project-mkultra" },
-      { name: "Pizzagate", tag: "CONSPIRACIES", slug: "pizzagate" },
-
-      // R
-      { name: "Rothschild Dynasty", tag: "ECONOMICS", slug: "rothschild-dynasty" },
-      { name: "Roswell Incident", tag: "CONSPIRACIES", slug: "roswell-incident" },
-
-      // S
-      { name: "Shadow Government", tag: "POLITICS", slug: "shadow-government" },
-      { name: "Secret Societies", tag: "CONSPIRACIES", slug: "secret-societies" },
-
-      // T
-      { name: "Trilateral Commission", tag: "POLITICS", slug: "trilateral-commission" },
-
-      // V
-      { name: "Vatican Secrets", tag: "RELIGION", slug: "vatican-secrets" },
-      { name: "Vaccines & Big Pharma", tag: "HEALTH", slug: "vaccines-big-pharma" },
-
-      // W
-      { name: "World Economic Forum", tag: "POLITICS", slug: "world-economic-forum" },
-      { name: "Weather Modification", tag: "SCIENCE", slug: "weather-modification" },
-
-      // Z
-      { name: "Zionism", tag: "POLITICS", slug: "zionism" },
-    ];
+    let entries = [];
 
     // Tag colors
     const tagColors = {
@@ -822,8 +744,14 @@
       buildEncyclopedia(filtered);
     });
 
-    // Initial build
-    buildEncyclopedia(entries);
+    // Fetch and build
+    fetch('/data/topics.json')
+      .then(res => res.json())
+      .then(data => {
+        entries = data.topics;
+        buildEncyclopedia(entries);
+      })
+      .catch(err => console.error('Error loading topics:', err));
 
     // Netlify Identity redirect
     if (window.netlifyIdentity) {
