@@ -9,502 +9,111 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Special+Elite&family=IBM+Plex+Mono:wght@400;500&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-
   <style>
     :root {
-      --red: #C0392B;
-      --red-dark: #8B0000;
-      --red-light: #E74C3C;
-      --black: #0a0a0a;
-      --dark: #111111;
-      --dark2: #1a1a1a;
-      --dark3: #222222;
-      --gray: #888888;
-      --light-gray: #cccccc;
-      --white: #f5f0e8;
-      --cream: #ede8df;
+      --red: #C0392B; --red-dark: #8B0000; --red-light: #E74C3C;
+      --black: #0a0a0a; --dark2: #1a1a1a; --dark3: #222;
+      --gray: #888; --light-gray: #ccc; --white: #f5f0e8; --cream: #ede8df;
       --border: #2a2a2a;
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: 'Crimson Pro', Georgia, serif; font-size: 18px; line-height: 1.6; overflow-x: hidden; }
 
-    body {
-      background: var(--black);
-      color: var(--white);
-      font-family: 'Crimson Pro', Georgia, serif;
-      font-size: 18px;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+    .ticker-wrap { background: var(--red-dark); border-bottom: 1px solid var(--red); padding: 6px 0; overflow: hidden; position: sticky; top: 0; z-index: 100; }
+    .ticker-label { display: inline-block; background: var(--red); color: white; font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 2px; padding: 2px 10px; margin-right: 16px; vertical-align: middle; text-transform: uppercase; }
+    .ticker-inner { display: inline-block; white-space: nowrap; animation: ticker 45s linear infinite; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #ffcccc; letter-spacing: 1px; }
+    @keyframes ticker { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
 
-    /* ── TICKER ── */
-    .ticker-wrap {
-      background: var(--red-dark);
-      border-bottom: 1px solid var(--red);
-      padding: 6px 0;
-      overflow: hidden;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .ticker-label {
-      display: inline-block;
-      background: var(--red);
-      color: white;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 2px;
-      padding: 2px 10px;
-      margin-right: 16px;
-      vertical-align: middle;
-      text-transform: uppercase;
-    }
-    .ticker-inner {
-      display: inline-block;
-      white-space: nowrap;
-      animation: ticker 40s linear infinite;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      color: #ffcccc;
-      letter-spacing: 1px;
-    }
-    @keyframes ticker {
-      0% { transform: translateX(100vw); }
-      100% { transform: translateX(-100%); }
-    }
-
-    /* ── HEADER ── */
-    header {
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-    }
-    .header-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 0 12px;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .site-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(28px, 6vw, 56px);
-      font-weight: 900;
-      letter-spacing: -1px;
-      line-height: 1;
-      color: var(--white);
-      text-decoration: none;
-    }
+    header { border-bottom: 1px solid var(--border); padding: 0 24px; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; padding: 20px 0 12px; gap: 16px; flex-wrap: wrap; }
+    .site-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 6vw, 56px); font-weight: 900; letter-spacing: -1px; line-height: 1; color: var(--white); text-decoration: none; }
     .site-title span { color: var(--red); }
-    .site-tagline {
-      font-family: 'Special Elite', cursive;
-      font-size: clamp(10px, 2vw, 13px);
-      color: var(--gray);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-top: 4px;
-    }
-    .header-meta {
-      text-align: right;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      color: var(--gray);
-      line-height: 1.8;
-    }
-    .header-meta a {
-      color: var(--red-light);
-      text-decoration: none;
-    }
-    .header-nav {
-      display: flex;
-      gap: 0;
-      border-top: 1px solid var(--border);
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
+    .site-tagline { font-family: 'Special Elite', cursive; font-size: clamp(10px, 2vw, 12px); color: var(--gray); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+    .header-meta { text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gray); line-height: 1.8; }
+    .header-meta a { color: var(--red-light); text-decoration: none; }
+    .header-nav { display: flex; border-top: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; }
     .header-nav::-webkit-scrollbar { display: none; }
-    .nav-link {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--gray);
-      text-decoration: none;
-      padding: 10px 20px;
-      border-right: 1px solid var(--border);
-      white-space: nowrap;
-      transition: color 0.2s, background 0.2s;
-    }
-    .nav-link:hover, .nav-link.active {
-      color: var(--white);
-      background: var(--dark2);
-    }
+    .nav-link { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); text-decoration: none; padding: 10px 20px; border-right: 1px solid var(--border); white-space: nowrap; transition: all 0.2s; cursor: pointer; background: none; border-top: none; border-left: none; border-bottom: none; }
+    .nav-link:hover, .nav-link.active { color: var(--white); background: var(--dark2); }
     .nav-link.active { color: var(--red-light); }
 
-    /* ── LAYOUT ── */
-    .main-layout {
-      display: grid;
-      grid-template-columns: 1fr 300px;
-      gap: 0;
-      max-width: 1400px;
-      margin: 0 auto;
-      min-height: calc(100vh - 160px);
-    }
+    .main-layout { display: grid; grid-template-columns: 1fr 300px; max-width: 1400px; margin: 0 auto; }
+    .encyclopedia { border-right: 1px solid var(--border); padding: 40px 48px; }
+    .encyclopedia-header { margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+    .encyclopedia-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(24px, 4vw, 40px); font-weight: 900; line-height: 1.1; margin-bottom: 8px; }
+    .encyclopedia-header h1 em { color: var(--red-light); font-style: italic; }
+    .encyclopedia-header p { font-size: 14px; color: var(--gray); font-family: 'IBM Plex Mono', monospace; }
 
-    /* ── ENCYCLOPEDIA MAIN ── */
-    .encyclopedia {
-      border-right: 1px solid var(--border);
-      padding: 40px 48px;
-    }
-    .encyclopedia-header {
-      margin-bottom: 40px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid var(--border);
-    }
-    .encyclopedia-header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(24px, 4vw, 40px);
-      font-weight: 900;
-      line-height: 1.1;
-      margin-bottom: 8px;
-    }
-    .encyclopedia-header h1 em {
-      color: var(--red-light);
-      font-style: italic;
-    }
-    .encyclopedia-header p {
-      font-size: 15px;
-      color: var(--gray);
-      font-family: 'IBM Plex Mono', monospace;
-      letter-spacing: 0.5px;
-    }
-
-    /* Alpha nav */
-    .alpha-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      margin-bottom: 40px;
-    }
-    .alpha-btn {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-      font-weight: 500;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--dark2);
-      border: 1px solid var(--border);
-      color: var(--gray);
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.15s;
-      border-radius: 2px;
-    }
-    .alpha-btn:hover, .alpha-btn.has-entries:hover {
-      background: var(--red-dark);
-      border-color: var(--red);
-      color: var(--white);
-    }
-    .alpha-btn.has-entries {
-      color: var(--white);
-      border-color: #444;
-      background: var(--dark3);
-    }
-    .alpha-btn.empty {
-      opacity: 0.25;
-      cursor: default;
-      pointer-events: none;
-    }
-
-    /* Entries */
-    .letter-section {
-      margin-bottom: 48px;
-    }
-    .letter-heading {
-      font-family: 'Playfair Display', serif;
-      font-size: 52px;
-      font-weight: 900;
-      color: var(--red);
-      line-height: 1;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 2px solid var(--red-dark);
-      display: flex;
-      align-items: baseline;
-      gap: 16px;
-    }
-    .letter-heading small {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-      color: var(--gray);
-      font-weight: 400;
-      letter-spacing: 2px;
-    }
-    .entry-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .entry-item a {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 14px 16px;
-      background: var(--dark2);
-      border: 1px solid var(--border);
-      border-left: 3px solid transparent;
-      text-decoration: none;
-      color: var(--white);
-      font-family: 'Crimson Pro', serif;
-      font-size: 18px;
-      transition: all 0.15s;
-      border-radius: 2px;
-    }
-    .entry-item a:hover {
-      background: var(--dark3);
-      border-left-color: var(--red);
-      padding-left: 20px;
-    }
-    .entry-arrow {
-      margin-left: auto;
-      color: var(--red);
-      font-size: 14px;
-      opacity: 0;
-      transition: opacity 0.15s, transform 0.15s;
-    }
-    .entry-item a:hover .entry-arrow {
-      opacity: 1;
-      transform: translateX(4px);
-    }
-    .entry-tag {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      background: var(--red-dark);
-      color: #ffaaaa;
-      padding: 2px 6px;
-      border-radius: 2px;
-    }
-
-    /* ── SIDEBAR ── */
-    .sidebar {
-      padding: 40px 24px;
-    }
-    .sidebar-block {
-      margin-bottom: 40px;
-      padding-bottom: 32px;
-      border-bottom: 1px solid var(--border);
-    }
-    .sidebar-block:last-child { border-bottom: none; }
-    .sidebar-title {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--red-light);
-      margin-bottom: 16px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--red-dark);
-    }
-
-    /* Latest articles in sidebar */
-    .latest-article {
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .latest-article:last-child { border-bottom: none; }
-    .latest-article a {
-      text-decoration: none;
-      color: var(--white);
-      font-family: 'Crimson Pro', serif;
-      font-size: 16px;
-      line-height: 1.3;
-      display: block;
-      margin-bottom: 4px;
-      transition: color 0.15s;
-    }
-    .latest-article a:hover { color: var(--red-light); }
-    .latest-article .meta {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      color: var(--gray);
-    }
-    .latest-article .tag {
-      display: inline-block;
-      background: var(--red-dark);
-      color: #ffaaaa;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 1px;
-      padding: 1px 5px;
-      margin-right: 6px;
-      border-radius: 1px;
-    }
-
-    /* Quote block */
-    .quote-block {
-      background: var(--dark2);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--red);
-      padding: 20px;
-      border-radius: 2px;
-    }
-    .quote-block blockquote {
-      font-family: 'Special Elite', cursive;
-      font-size: 14px;
-      line-height: 1.7;
-      color: var(--cream);
-      margin-bottom: 8px;
-    }
-    .quote-block cite {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      color: var(--gray);
-      letter-spacing: 1px;
-    }
-
-    /* Stats */
-    .stat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-    .stat-item {
-      background: var(--dark2);
-      border: 1px solid var(--border);
-      padding: 12px;
-      text-align: center;
-      border-radius: 2px;
-    }
-    .stat-number {
-      font-family: 'Playfair Display', serif;
-      font-size: 28px;
-      font-weight: 900;
-      color: var(--red-light);
-      line-height: 1;
-      display: block;
-    }
-    .stat-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--gray);
-      margin-top: 4px;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 32px 24px;
-      text-align: center;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      color: var(--gray);
-      line-height: 2;
-    }
-    footer a { color: var(--red-light); text-decoration: none; }
-
-    /* ── SEARCH ── */
-    .search-wrap {
-      position: relative;
-      margin-bottom: 32px;
-    }
-    .search-input {
-      width: 100%;
-      background: var(--dark2);
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      padding: 12px 16px 12px 40px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 13px;
-      color: var(--white);
-      outline: none;
-      transition: border-color 0.2s;
-    }
+    .search-wrap { position: relative; margin-bottom: 32px; }
+    .search-input { width: 100%; background: var(--dark2); border: 1px solid var(--border); border-radius: 2px; padding: 12px 16px 12px 40px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--white); outline: none; transition: border-color 0.2s; }
     .search-input:focus { border-color: var(--red); }
     .search-input::placeholder { color: var(--gray); }
-    .search-icon {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--gray);
-      font-size: 14px;
-    }
+    .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--gray); }
 
-    /* ── RESPONSIVE ── */
+    .alpha-nav { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 40px; }
+    .alpha-btn { font-family: 'IBM Plex Mono', monospace; font-size: 12px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: var(--dark2); border: 1px solid var(--border); color: var(--gray); text-decoration: none; border-radius: 2px; transition: all 0.15s; }
+    .alpha-btn.has-entries { color: var(--white); border-color: #444; background: var(--dark3); }
+    .alpha-btn.has-entries:hover { background: var(--red-dark); border-color: var(--red); }
+    .alpha-btn.empty { opacity: 0.2; pointer-events: none; }
+
+    .letter-section { margin-bottom: 48px; opacity: 0; transform: translateY(16px); animation: fadeUp 0.4s ease forwards; }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    .letter-heading { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 900; color: var(--red); line-height: 1; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--red-dark); display: flex; align-items: baseline; gap: 16px; }
+    .letter-heading small { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--gray); font-weight: 400; letter-spacing: 2px; }
+    .entry-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .entry-item a { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--dark2); border: 1px solid var(--border); border-left: 3px solid transparent; text-decoration: none; color: var(--white); font-family: 'Crimson Pro', serif; font-size: 18px; transition: all 0.15s; border-radius: 2px; }
+    .entry-item a:hover { background: var(--dark3); border-left-color: var(--red); padding-left: 20px; }
+    .entry-tag { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; padding: 2px 6px; border-radius: 2px; flex-shrink: 0; color: #ffaaaa; }
+    .entry-arrow { margin-left: auto; color: var(--red); font-size: 14px; opacity: 0; transition: all 0.15s; }
+    .entry-item a:hover .entry-arrow { opacity: 1; transform: translateX(4px); }
+
+    .loading { text-align: center; padding: 60px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--gray); }
+
+    .sidebar { padding: 40px 24px; }
+    .sidebar-block { margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+    .sidebar-block:last-child { border-bottom: none; }
+    .sidebar-title { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--red-light); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--red-dark); }
+    .latest-article { padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .latest-article:last-child { border-bottom: none; }
+    .latest-article a { text-decoration: none; color: var(--white); font-family: 'Crimson Pro', serif; font-size: 16px; line-height: 1.3; display: block; margin-bottom: 4px; transition: color 0.15s; }
+    .latest-article a:hover { color: var(--red-light); }
+    .latest-article .meta { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--gray); }
+    .art-tag { display: inline-block; background: var(--red-dark); color: #ffaaaa; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 1px; padding: 1px 5px; margin-right: 6px; border-radius: 1px; }
+    .quote-block { background: var(--dark2); border: 1px solid var(--border); border-left: 3px solid var(--red); padding: 20px; border-radius: 2px; }
+    .quote-block blockquote { font-family: 'Special Elite', cursive; font-size: 14px; line-height: 1.7; color: var(--cream); margin-bottom: 8px; }
+    .quote-block cite { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--gray); }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .stat-item { background: var(--dark2); border: 1px solid var(--border); padding: 12px; text-align: center; border-radius: 2px; }
+    .stat-number { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; color: var(--red-light); line-height: 1; display: block; }
+    .stat-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray); margin-top: 4px; }
+
+    footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gray); line-height: 2; }
+    footer a { color: var(--red-light); text-decoration: none; }
+
     @media (max-width: 900px) {
-      .main-layout {
-        grid-template-columns: 1fr;
-      }
-      .encyclopedia {
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-        padding: 24px 20px;
-      }
-      .sidebar {
-        padding: 24px 20px;
-      }
+      .main-layout { grid-template-columns: 1fr; }
+      .encyclopedia { border-right: none; border-bottom: 1px solid var(--border); padding: 24px 20px; }
+      .sidebar { padding: 24px 20px; }
       .letter-heading { font-size: 36px; }
     }
-
     @media (max-width: 480px) {
       header { padding: 0 16px; }
-      .header-top { padding: 14px 0 10px; }
-      .nav-link { padding: 10px 14px; font-size: 10px; }
       .encyclopedia { padding: 20px 16px; }
       .sidebar { padding: 20px 16px; }
-      .entry-item a { font-size: 16px; padding: 12px 12px; }
-      .alpha-btn { width: 28px; height: 28px; font-size: 11px; }
+      .entry-item a { font-size: 16px; padding: 12px; }
+      .alpha-btn { width: 28px; height: 28px; font-size: 10px; }
+      .letter-heading { font-size: 28px; }
     }
-
-    /* ── ANIMATIONS ── */
-    .letter-section {
-      opacity: 0;
-      transform: translateY(16px);
-      animation: fadeUp 0.4s ease forwards;
-    }
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .letter-section:nth-child(1) { animation-delay: 0.05s; }
-    .letter-section:nth-child(2) { animation-delay: 0.1s; }
-    .letter-section:nth-child(3) { animation-delay: 0.15s; }
-    .letter-section:nth-child(4) { animation-delay: 0.2s; }
-    .letter-section:nth-child(5) { animation-delay: 0.25s; }
-    .letter-section:nth-child(6) { animation-delay: 0.3s; }
-
-    /* Hidden when searching */
-    .letter-section.hidden { display: none; }
-    .entry-item.hidden { display: none; }
   </style>
 </head>
 <body>
 
-  <!-- TICKER -->
   <div class="ticker-wrap">
     <span class="ticker-label">⚠ Breaking</span>
-    <span class="ticker-inner">
-      NEW ENTRY: Jesus Christ — Historical figure or constructed myth? &nbsp;///&nbsp;
-      AREA 51: Declassified documents reveal new details &nbsp;///&nbsp;
-      BOLSHEVISM: The revolution that changed the world &nbsp;///&nbsp;
-      FREEMASONRY: 300 years of secret rituals exposed &nbsp;///&nbsp;
-      NEW WORLD ORDER: The global elite and their agenda &nbsp;///&nbsp;
-      CONSPIRATORS.BLOG — The Truth Has No Expiry Date &nbsp;///&nbsp;
-    </span>
+    <span class="ticker-inner">CONSPIRATORS.BLOG — The Truth Has No Expiry Date &nbsp;///&nbsp; NEW: Jesus Christ — Historical figure or constructed myth? &nbsp;///&nbsp; Area 51: Declassified documents reveal new details &nbsp;///&nbsp; Freemasonry: 300 years of secret rituals &nbsp;///&nbsp; New World Order: The global elite and their agenda &nbsp;///&nbsp;</span>
   </div>
 
-  <!-- HEADER -->
   <header>
     <div class="header-top">
       <div>
@@ -513,79 +122,58 @@
       </div>
       <div class="header-meta">
         <div>Founded by <strong>Casix</strong>, Editor in Chief</div>
-        <div>conspirators.blog</div>
-        <div><a href="/admin/">✦ Write an Article</a></div>
+        <div><a href="/admin/">✦ Admin Panel</a></div>
       </div>
     </div>
     <nav class="header-nav">
-      <a href="/" class="nav-link active">Encyclopedia</a>
-      <a href="#latest" class="nav-link">Latest</a>
-      <a href="#politics" class="nav-link">Politics</a>
-      <a href="#religion" class="nav-link">Religion</a>
-      <a href="#health" class="nav-link">Health</a>
-      <a href="#conspiracies" class="nav-link">Conspiracies</a>
+      <button class="nav-link active" onclick="resetFilters(this)">All Topics</button>
+      <button class="nav-link" onclick="filterByTag('CONSPIRACIES', this)">Conspiracies</button>
+      <button class="nav-link" onclick="filterByTag('POLITICS', this)">Politics</button>
+      <button class="nav-link" onclick="filterByTag('RELIGION', this)">Religion</button>
+      <button class="nav-link" onclick="filterByTag('HEALTH', this)">Health</button>
+      <button class="nav-link" onclick="filterByTag('SCIENCE', this)">Science</button>
       <a href="/admin/" class="nav-link">Admin ↗</a>
     </nav>
   </header>
 
-  <!-- MAIN -->
   <div class="main-layout">
-
-    <!-- ENCYCLOPEDIA -->
     <main class="encyclopedia">
-
       <div class="encyclopedia-header">
         <h1>The Conspiracist's<br><em>Encyclopedia</em></h1>
-        <p>Browse all topics A–Z · Click any entry to read related articles</p>
+        <p>Browse all topics A–Z · Click any entry to explore articles</p>
       </div>
 
-      <!-- SEARCH -->
       <div class="search-wrap">
         <span class="search-icon">🔍</span>
-        <input
-          type="text"
-          class="search-input"
-          id="searchInput"
-          placeholder="Search entries... (e.g. Area 51, Freemasonry)"
-          autocomplete="off"
-        />
+        <input type="text" class="search-input" id="searchInput" placeholder="Search topics... (e.g. Area 51, Illuminati)" autocomplete="off" />
       </div>
 
-      <!-- ALPHABET QUICK NAV -->
       <div class="alpha-nav" id="alphNav"></div>
-
-      <!-- ENTRIES -->
-      <div id="encyclopediaEntries"></div>
-
+      <div id="encyclopediaEntries"><div class="loading">Loading encyclopedia…</div></div>
     </main>
 
-    <!-- SIDEBAR -->
     <aside class="sidebar">
-
       <div class="sidebar-block">
         <div class="sidebar-title">Latest Articles</div>
-        <div id="latestArticles">
-          <!-- Populated by JS or CMS -->
-          <div class="latest-article">
-            <span class="tag">EXCLUSIVE</span>
-            <a href="#">The Hidden Architects of the New World Order</a>
-            <div class="meta">Mar 19, 2026 · Conspiracies</div>
-          </div>
-          <div class="latest-article">
-            <span class="tag">INVESTIGATION</span>
-            <a href="#">Bolshevism and the Banking Elite: A Hidden Connection</a>
-            <div class="meta">Mar 18, 2026 · Politics</div>
-          </div>
-          <div class="latest-article">
-            <span class="tag">DOCUMENTS</span>
-            <a href="#">Area 51: What the Declassified Files Actually Say</a>
-            <div class="meta">Mar 17, 2026 · Conspiracies</div>
-          </div>
-          <div class="latest-article">
-            <span class="tag">ANALYSIS</span>
-            <a href="#">The Council of Nicaea and the Rewriting of Christianity</a>
-            <div class="meta">Mar 16, 2026 · Religion</div>
-          </div>
+        <div class="latest-article">
+          <span class="art-tag">EXCLUSIVE</span>
+          <a href="#">The Hidden Architects of the New World Order</a>
+          <div class="meta">Mar 19, 2026 · Conspiracies</div>
+        </div>
+        <div class="latest-article">
+          <span class="art-tag">INVESTIGATION</span>
+          <a href="#">Bolshevism and the Banking Elite</a>
+          <div class="meta">Mar 18, 2026 · Politics</div>
+        </div>
+        <div class="latest-article">
+          <span class="art-tag">DOCUMENTS</span>
+          <a href="#">Area 51: What the Declassified Files Say</a>
+          <div class="meta">Mar 17, 2026 · Conspiracies</div>
+        </div>
+        <div class="latest-article">
+          <span class="art-tag">ANALYSIS</span>
+          <a href="#">The Council of Nicaea and Christianity's Origins</a>
+          <div class="meta">Mar 16, 2026 · Religion</div>
         </div>
       </div>
 
@@ -600,169 +188,136 @@
       <div class="sidebar-block">
         <div class="sidebar-title">Encyclopedia Stats</div>
         <div class="stat-grid">
-          <div class="stat-item">
-            <span class="stat-number" id="statEntries">0</span>
-            <div class="stat-label">Entries</div>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number" id="statLetters">0</span>
-            <div class="stat-label">Letters</div>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">∞</span>
-            <div class="stat-label">Truths</div>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">0</span>
-            <div class="stat-label">Censored</div>
-          </div>
+          <div class="stat-item"><span class="stat-number" id="statEntries">—</span><div class="stat-label">Entries</div></div>
+          <div class="stat-item"><span class="stat-number" id="statLetters">—</span><div class="stat-label">Letters</div></div>
+          <div class="stat-item"><span class="stat-number">∞</span><div class="stat-label">Truths</div></div>
+          <div class="stat-item"><span class="stat-number">0</span><div class="stat-label">Censored</div></div>
         </div>
       </div>
 
       <div class="sidebar-block">
         <div class="sidebar-title">About</div>
-        <p style="font-size:15px; color: var(--light-gray); line-height:1.7;">
-          Conspirators.blog is an independent encyclopedia of suppressed history, hidden agendas, and alternative research. No ads. No censors. No agenda — except the truth.
-        </p>
-        <p style="margin-top:12px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--gray);">
-          Founded by <strong style="color:var(--white)">Casix</strong>, Editor in Chief.
-        </p>
+        <p style="font-size:15px;color:var(--light-gray);line-height:1.7;">Conspirators.blog is an independent encyclopedia of suppressed history, hidden agendas, and alternative research. No censors. No agenda — except the truth.</p>
+        <p style="margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gray);">Founded by <strong style="color:var(--white)">Casix</strong>, Editor in Chief.</p>
       </div>
-
     </aside>
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <div>© 2026 Conspirators.blog · Founded by Casix · <a href="/admin/">Admin Panel</a></div>
-    <div style="margin-top:8px; color: #555;">The only difference between a conspiracy theory and the truth is about six months.</div>
+    <div style="margin-top:8px;color:#555;">"The only difference between a conspiracy theory and the truth is about six months."</div>
   </footer>
 
   <script>
-    // ═══════════════════════════════════════════════════════════════
-    // ENCYCLOPEDIA DATA
-    // ═══════════════════════════════════════════════════════════════
-    let entries = [];
-
-    // Tag colors
-    const tagColors = {
-      CONSPIRACIES: "#8B0000",
-      POLITICS: "#1a3a5c",
-      RELIGION: "#3d1a5c",
-      HEALTH: "#1a4a2a",
-      SCIENCE: "#1a3a4a",
-      ECONOMICS: "#4a3a1a",
-      HISTORY: "#3a2a1a",
-      INVESTIGATION: "#5c1a1a",
+    const TAG_COLORS = {
+      CONSPIRACIES:"#6b0000", POLITICS:"#0d2a40", RELIGION:"#2d0d40",
+      HEALTH:"#0d3320", SCIENCE:"#0d2a35", ECONOMICS:"#352a0d",
+      HISTORY:"#2a1d0d", INVESTIGATION:"#400d0d"
     };
 
-    // ═══════════════════════════════════════════════════════════════
-    // BUILD ENCYCLOPEDIA
-    // ═══════════════════════════════════════════════════════════════
-    function buildEncyclopedia(filteredEntries) {
+    let allTopics = [];
+    let activeTag = null;
+
+    async function loadTopics() {
+      try {
+        const res = await fetch('/data/topics.json?t=' + Date.now());
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        allTopics = (data.topics || []).sort((a,b) => a.name.localeCompare(b.name));
+        render(allTopics);
+      } catch(e) {
+        document.getElementById('encyclopediaEntries').innerHTML =
+          '<div style="padding:40px;text-align:center;color:var(--gray);font-family:monospace;font-size:13px;">Could not load topics: ' + e.message + '</div>';
+      }
+    }
+
+    function filterByTag(tag, btn) {
+      activeTag = (activeTag === tag) ? null : tag;
+      document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+      if (activeTag) btn.classList.add('active');
+      else document.querySelector('.nav-link').classList.add('active');
+      applyFilters();
+    }
+
+    function resetFilters(btn) {
+      activeTag = null;
+      document.getElementById('searchInput').value = '';
+      document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      render(allTopics);
+    }
+
+    function applyFilters() {
+      const q = document.getElementById('searchInput').value.toLowerCase().trim();
+      let filtered = allTopics;
+      if (activeTag) filtered = filtered.filter(e => e.tag === activeTag);
+      if (q) filtered = filtered.filter(e => e.name.toLowerCase().includes(q) || e.tag.toLowerCase().includes(q));
+      render(filtered);
+    }
+
+    function render(topics) {
       const container = document.getElementById('encyclopediaEntries');
       const alphNav = document.getElementById('alphNav');
-      container.innerHTML = '';
 
-      // Group by first letter
       const grouped = {};
-      filteredEntries.forEach(entry => {
-        const letter = entry.name[0].toUpperCase();
-        if (!grouped[letter]) grouped[letter] = [];
-        grouped[letter].push(entry);
+      topics.forEach(e => {
+        const l = e.name[0].toUpperCase();
+        if (!grouped[l]) grouped[l] = [];
+        grouped[l].push(e);
       });
-
-      // Sort each group alphabetically
-      Object.keys(grouped).forEach(letter => {
-        grouped[letter].sort((a, b) => a.name.localeCompare(b.name));
-      });
-
       const letters = Object.keys(grouped).sort();
 
-      // Build alpha nav
-      alphNav.innerHTML = '';
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(letter => {
-        const btn = document.createElement('a');
-        btn.className = 'alpha-btn' + (grouped[letter] ? ' has-entries' : ' empty');
-        btn.textContent = letter;
-        if (grouped[letter]) {
-          btn.href = '#letter-' + letter;
-          btn.title = grouped[letter].length + ' entries';
-        }
-        alphNav.appendChild(btn);
-      });
-
-      // Update stats
-      document.getElementById('statEntries').textContent = filteredEntries.length;
+      document.getElementById('statEntries').textContent = topics.length;
       document.getElementById('statLetters').textContent = letters.length;
 
-      // Build sections
-      letters.forEach((letter, i) => {
-        const section = document.createElement('div');
-        section.className = 'letter-section';
-        section.id = 'letter-' + letter;
-        section.style.animationDelay = (i * 0.05) + 's';
-
-        const count = grouped[letter].length;
-        section.innerHTML = `
-          <div class="letter-heading">
-            ${letter}
-            <small>${count} entr${count === 1 ? 'y' : 'ies'}</small>
-          </div>
-          <ul class="entry-list">
-            ${grouped[letter].map(entry => `
-              <li class="entry-item">
-                <a href="/topics/${entry.slug}/">
-                  <span class="entry-tag" style="background:${tagColors[entry.tag] || '#333'}">${entry.tag}</span>
-                  ${entry.name}
-                  <span class="entry-arrow">→</span>
-                </a>
-              </li>
-            `).join('')}
-          </ul>
-        `;
-        container.appendChild(section);
+      // Alpha nav
+      alphNav.innerHTML = '';
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(l => {
+        const a = document.createElement('a');
+        a.className = 'alpha-btn ' + (grouped[l] ? 'has-entries' : 'empty');
+        a.textContent = l;
+        if (grouped[l]) { a.href = '#letter-' + l; a.title = grouped[l].length + ' entr' + (grouped[l].length===1?'y':'ies'); }
+        alphNav.appendChild(a);
       });
 
-      if (filteredEntries.length === 0) {
-        container.innerHTML = '<div style="padding:40px; text-align:center; color:var(--gray); font-family:IBM Plex Mono,monospace; font-size:13px;">No entries found. Try a different search term.</div>';
-      }
-    }
-
-    // ═══════════════════════════════════════════════════════════════
-    // SEARCH
-    // ═══════════════════════════════════════════════════════════════
-    document.getElementById('searchInput').addEventListener('input', function() {
-      const q = this.value.toLowerCase().trim();
-      if (!q) {
-        buildEncyclopedia(entries);
+      // Sections
+      container.innerHTML = '';
+      if (!topics.length) {
+        container.innerHTML = '<div style="padding:40px;text-align:center;color:var(--gray);font-family:monospace;font-size:13px;">No entries found.</div>';
         return;
       }
-      const filtered = entries.filter(e =>
-        e.name.toLowerCase().includes(q) || e.tag.toLowerCase().includes(q)
-      );
-      buildEncyclopedia(filtered);
-    });
 
-    // Fetch and build
-    fetch('/data/topics.json')
-      .then(res => res.json())
-      .then(data => {
-        entries = data.topics;
-        buildEncyclopedia(entries);
-      })
-      .catch(err => console.error('Error loading topics:', err));
-
-    // Netlify Identity redirect
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
-          });
-        }
+      letters.forEach((l, i) => {
+        const sec = document.createElement('div');
+        sec.className = 'letter-section';
+        sec.id = 'letter-' + l;
+        sec.style.animationDelay = (i * 0.04) + 's';
+        const cnt = grouped[l].length;
+        sec.innerHTML = `
+          <div class="letter-heading">${l}<small>${cnt} entr${cnt===1?'y':'ies'}</small></div>
+          <ul class="entry-list">
+            ${grouped[l].map(e => `
+              <li class="entry-item">
+                <a href="/topics/${e.slug}/">
+                  <span class="entry-tag" style="background:${TAG_COLORS[e.tag]||'#333'}">${e.tag}</span>
+                  ${e.name}
+                  <span class="entry-arrow">→</span>
+                </a>
+              </li>`).join('')}
+          </ul>`;
+        container.appendChild(sec);
       });
     }
+
+    document.getElementById('searchInput').addEventListener('input', applyFilters);
+
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('init', u => {
+        if (!u) window.netlifyIdentity.on('login', () => { document.location.href = '/admin/'; });
+      });
+    }
+
+    loadTopics();
   </script>
 </body>
 </html>
