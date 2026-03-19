@@ -7,7 +7,7 @@
   to = "/admin/index.html"
   status = 200
 
-# Encyclopedia topic pages — all served by the same template
+# Topic pages — all served by topics/index.html
 [[redirects]]
   from = "/topics/:slug/"
   to = "/topics/index.html"
@@ -17,3 +17,9 @@
   from = "/topics/:slug"
   to = "/topics/index.html"
   status = 200
+
+# 404 fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 404
