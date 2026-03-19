@@ -2,415 +2,839 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Conspirators.blog — The Conspiracist's Journal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conspirators.blog — The Conspiracist's Encyclopedia</title>
+  <meta name="description" content="The world's first conspiracy encyclopedia. Explore hidden truths from Area 51 to the New World Order, organized A to Z." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Special+Elite&family=IBM+Plex+Mono:wght@400;500&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Special+Elite&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
   <style>
     :root {
-      --red-deep:    #8B0000;
-      --red-mid:     #C0392B;
-      --red-bright:  #E74C3C;
-      --red-pale:    #FF6B6B;
-      --black:       #0A0A0A;
-      --dark:        #111111;
-      --grey-dark:   #1C1C1C;
-      --grey-mid:    #2E2E2E;
-      --grey-light:  #888888;
-      --white:       #F5F0EB;
-      --white-pure:  #FFFFFF;
+      --red: #C0392B;
+      --red-dark: #8B0000;
+      --red-light: #E74C3C;
+      --black: #0a0a0a;
+      --dark: #111111;
+      --dark2: #1a1a1a;
+      --dark3: #222222;
+      --gray: #888888;
+      --light-gray: #cccccc;
+      --white: #f5f0e8;
+      --cream: #ede8df;
+      --border: #2a2a2a;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     html { scroll-behavior: smooth; }
-    body { background: var(--black); color: var(--white); font-family: 'Special Elite', serif; overflow-x: hidden; }
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      background: var(--red-dark);
+      border-bottom: 1px solid var(--red);
+      padding: 6px 0;
+      overflow: hidden;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .ticker-label {
+      display: inline-block;
+      background: var(--red);
+      color: white;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      padding: 2px 10px;
+      margin-right: 16px;
+      vertical-align: middle;
+      text-transform: uppercase;
+    }
+    .ticker-inner {
+      display: inline-block;
+      white-space: nowrap;
+      animation: ticker 40s linear infinite;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: #ffcccc;
+      letter-spacing: 1px;
+    }
+    @keyframes ticker {
+      0% { transform: translateX(100vw); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* ── HEADER ── */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0 12px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .site-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 6vw, 56px);
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .site-title span { color: var(--red); }
+    .site-tagline {
+      font-family: 'Special Elite', cursive;
+      font-size: clamp(10px, 2vw, 13px);
+      color: var(--gray);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .header-meta {
+      text-align: right;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--gray);
+      line-height: 1.8;
+    }
+    .header-meta a {
+      color: var(--red-light);
+      text-decoration: none;
+    }
+    .header-nav {
+      display: flex;
+      gap: 0;
+      border-top: 1px solid var(--border);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .header-nav::-webkit-scrollbar { display: none; }
+    .nav-link {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-decoration: none;
+      padding: 10px 20px;
+      border-right: 1px solid var(--border);
+      white-space: nowrap;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--white);
+      background: var(--dark2);
+    }
+    .nav-link.active { color: var(--red-light); }
+
+    /* ── LAYOUT ── */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 0;
+      max-width: 1400px;
+      margin: 0 auto;
+      min-height: calc(100vh - 160px);
+    }
+
+    /* ── ENCYCLOPEDIA MAIN ── */
+    .encyclopedia {
+      border-right: 1px solid var(--border);
+      padding: 40px 48px;
+    }
+    .encyclopedia-header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .encyclopedia-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 4vw, 40px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .encyclopedia-header h1 em {
+      color: var(--red-light);
+      font-style: italic;
+    }
+    .encyclopedia-header p {
+      font-size: 15px;
+      color: var(--gray);
+      font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.5px;
+    }
+
+    /* Alpha nav */
+    .alpha-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 40px;
+    }
+    .alpha-btn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      color: var(--gray);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+      border-radius: 2px;
+    }
+    .alpha-btn:hover, .alpha-btn.has-entries:hover {
+      background: var(--red-dark);
+      border-color: var(--red);
+      color: var(--white);
+    }
+    .alpha-btn.has-entries {
+      color: var(--white);
+      border-color: #444;
+      background: var(--dark3);
+    }
+    .alpha-btn.empty {
+      opacity: 0.25;
+      cursor: default;
       pointer-events: none;
-      z-index: 0;
-      opacity: 0.4;
     }
 
-    .top-bar { background: var(--red-deep); text-align: center; padding: 6px 0; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--white); text-transform: uppercase; position: relative; z-index: 10; }
+    /* Entries */
+    .letter-section {
+      margin-bottom: 48px;
+    }
+    .letter-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px;
+      font-weight: 900;
+      color: var(--red);
+      line-height: 1;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--red-dark);
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+    .letter-heading small {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--gray);
+      font-weight: 400;
+      letter-spacing: 2px;
+    }
+    .entry-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .entry-item a {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 16px;
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-left: 3px solid transparent;
+      text-decoration: none;
+      color: var(--white);
+      font-family: 'Crimson Pro', serif;
+      font-size: 18px;
+      transition: all 0.15s;
+      border-radius: 2px;
+    }
+    .entry-item a:hover {
+      background: var(--dark3);
+      border-left-color: var(--red);
+      padding-left: 20px;
+    }
+    .entry-arrow {
+      margin-left: auto;
+      color: var(--red);
+      font-size: 14px;
+      opacity: 0;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .entry-item a:hover .entry-arrow {
+      opacity: 1;
+      transform: translateX(4px);
+    }
+    .entry-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: var(--red-dark);
+      color: #ffaaaa;
+      padding: 2px 6px;
+      border-radius: 2px;
+    }
 
-    header { position: relative; z-index: 10; border-bottom: 1px solid var(--grey-mid); background: var(--dark); padding: 0 2rem; }
+    /* ── SIDEBAR ── */
+    .sidebar {
+      padding: 40px 24px;
+    }
+    .sidebar-block {
+      margin-bottom: 40px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-block:last-child { border-bottom: none; }
+    .sidebar-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--red-light);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--red-dark);
+    }
 
-    .header-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 1.5rem 0; border-bottom: 1px solid var(--grey-mid); }
+    /* Latest articles in sidebar */
+    .latest-article {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .latest-article:last-child { border-bottom: none; }
+    .latest-article a {
+      text-decoration: none;
+      color: var(--white);
+      font-family: 'Crimson Pro', serif;
+      font-size: 16px;
+      line-height: 1.3;
+      display: block;
+      margin-bottom: 4px;
+      transition: color 0.15s;
+    }
+    .latest-article a:hover { color: var(--red-light); }
+    .latest-article .meta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--gray);
+    }
+    .latest-article .tag {
+      display: inline-block;
+      background: var(--red-dark);
+      color: #ffaaaa;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1px;
+      padding: 1px 5px;
+      margin-right: 6px;
+      border-radius: 1px;
+    }
 
-    .header-date { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--grey-light); letter-spacing: 0.1em; }
-    .header-logo { text-align: center; }
-    .logo-title { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 900; color: var(--white-pure); letter-spacing: -0.02em; line-height: 1; text-decoration: none; display: block; }
-    .logo-title span { color: var(--red-bright); }
-    .logo-tagline { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--grey-light); letter-spacing: 0.25em; text-transform: uppercase; margin-top: 0.3rem; }
-    .header-author { text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--grey-light); }
-    .header-author strong { color: var(--red-pale); display: block; }
+    /* Quote block */
+    .quote-block {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--red);
+      padding: 20px;
+      border-radius: 2px;
+    }
+    .quote-block blockquote {
+      font-family: 'Special Elite', cursive;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+    .quote-block cite {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--gray);
+      letter-spacing: 1px;
+    }
 
-    nav { max-width: 1200px; margin: 0 auto; display: flex; gap: 2rem; padding: 0.8rem 0; justify-content: center; }
-    nav a { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey-light); text-decoration: none; position: relative; transition: color 0.2s; }
-    nav a::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 1px; background: var(--red-bright); transform: scaleX(0); transition: transform 0.2s; }
-    nav a:hover { color: var(--red-pale); }
-    nav a:hover::after { transform: scaleX(1); }
-    nav a.active { color: var(--red-bright); }
-    nav a.active::after { transform: scaleX(1); }
+    /* Stats */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .stat-item {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      padding: 12px;
+      text-align: center;
+      border-radius: 2px;
+    }
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--red-light);
+      line-height: 1;
+      display: block;
+    }
+    .stat-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-top: 4px;
+    }
 
-    .ticker-wrap { background: var(--grey-dark); border-top: 2px solid var(--red-mid); border-bottom: 2px solid var(--red-mid); overflow: hidden; position: relative; z-index: 5; }
-    .ticker-label { position: absolute; left: 0; top: 0; bottom: 0; background: var(--red-mid); padding: 0 1.2rem; display: flex; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white-pure); z-index: 2; white-space: nowrap; }
-    .ticker-content { display: flex; animation: ticker 32s linear infinite; padding: 0.55rem 0 0.55rem 200px; gap: 4rem; white-space: nowrap; }
-    .ticker-content span { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--white); letter-spacing: 0.05em; }
-    .ticker-content span::before { content: '◆ '; color: var(--red-bright); }
-    @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--gray);
+      line-height: 2;
+    }
+    footer a { color: var(--red-light); text-decoration: none; }
 
-    .hero { position: relative; z-index: 5; max-width: 1200px; margin: 0 auto; padding: 3rem 2rem 2rem; display: grid; grid-template-columns: 2fr 1fr; gap: 2.5rem; }
-    .hero-main { position: relative; }
+    /* ── SEARCH ── */
+    .search-wrap {
+      position: relative;
+      margin-bottom: 32px;
+    }
+    .search-input {
+      width: 100%;
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 12px 16px 12px 40px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-input:focus { border-color: var(--red); }
+    .search-input::placeholder { color: var(--gray); }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+      font-size: 14px;
+    }
 
-    .article-category { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white-pure); background: var(--red-mid); padding: 3px 10px; margin-bottom: 1rem; }
-
-    .hero-image-placeholder { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, var(--grey-dark) 0%, var(--grey-mid) 50%, var(--grey-dark) 100%); border: 1px solid var(--grey-mid); display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; position: relative; overflow: hidden; }
-    .hero-image-placeholder::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(139,0,0,0.05) 20px, rgba(139,0,0,0.05) 40px); }
-    .hero-image-placeholder .eye-icon { width: 80px; height: 80px; opacity: 0.15; fill: var(--red-pale); }
-
-    .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 900; line-height: 1.15; color: var(--white-pure); margin-bottom: 0.8rem; border-left: 4px solid var(--red-bright); padding-left: 1rem; }
-    .hero-title em { color: var(--red-pale); font-style: italic; }
-    .hero-excerpt { font-size: 0.95rem; line-height: 1.7; color: var(--grey-light); margin-bottom: 1rem; padding-left: 1.2rem; }
-    .read-more { display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red-pale); text-decoration: none; transition: gap 0.2s; margin-left: 1.2rem; }
-    .read-more:hover { gap: 0.8rem; color: var(--red-bright); }
-
-    .hero-sidebar { display: flex; flex-direction: column; gap: 1.5rem; border-left: 1px solid var(--grey-mid); padding-left: 2rem; }
-    .sidebar-section-title { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red-mid); border-bottom: 1px solid var(--grey-mid); padding-bottom: 0.5rem; margin-bottom: 0.5rem; }
-    .sidebar-article { padding-bottom: 1.2rem; border-bottom: 1px solid var(--grey-dark); }
-    .sidebar-article:last-child { border-bottom: none; }
-    .sidebar-article .article-category { margin-bottom: 0.4rem; }
-    .sidebar-article h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--white-pure); line-height: 1.3; margin-bottom: 0.3rem; }
-    .sidebar-article p { font-size: 0.78rem; color: var(--grey-light); line-height: 1.5; }
-
-    .section-divider { max-width: 1200px; margin: 1rem auto; padding: 0 2rem; display: flex; align-items: center; gap: 1rem; }
-    .section-divider .label { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; font-style: italic; color: var(--red-bright); white-space: nowrap; }
-    .section-divider .line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--red-deep), transparent); }
-
-    .card-grid { position: relative; z-index: 5; max-width: 1200px; margin: 0 auto; padding: 0 2rem 3rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-    .card { border: 1px solid var(--grey-mid); background: var(--dark); transition: border-color 0.3s, transform 0.3s; cursor: pointer; position: relative; overflow: hidden; }
-    .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--red-mid); transform: scaleX(0); transition: transform 0.3s; transform-origin: left; }
-    .card:hover { border-color: var(--red-deep); transform: translateY(-3px); }
-    .card:hover::before { transform: scaleX(1); }
-    .card-image { width: 100%; aspect-ratio: 4/3; background: linear-gradient(135deg, var(--grey-dark), #1a1a1a); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-    .card-image .number { font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 900; color: rgba(139,0,0,0.12); position: absolute; bottom: -10px; right: 10px; line-height: 1; }
-    .card-image .icon { font-size: 2.5rem; opacity: 0.3; position: relative; z-index: 1; }
-    .card-body { padding: 1.2rem; }
-    .card-body .article-category { margin-bottom: 0.6rem; }
-    .card-body h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--white-pure); line-height: 1.3; margin-bottom: 0.6rem; }
-    .card-body p { font-size: 0.8rem; color: var(--grey-light); line-height: 1.6; margin-bottom: 0.8rem; }
-    .card-meta { display: flex; justify-content: space-between; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; color: #555; letter-spacing: 0.05em; border-top: 1px solid var(--grey-dark); padding-top: 0.7rem; }
-    .card-meta .tag { color: var(--red-deep); }
-
-    .quote-band { position: relative; z-index: 5; background: var(--grey-dark); border-top: 2px solid var(--red-deep); border-bottom: 2px solid var(--red-deep); padding: 3rem 2rem; text-align: center; margin: 1rem 0; }
-    .quote-band blockquote { max-width: 800px; margin: 0 auto; font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-style: italic; color: var(--white-pure); line-height: 1.5; }
-    .quote-band blockquote::before { content: '\201C'; font-size: 5rem; color: var(--red-deep); line-height: 0; vertical-align: -2.5rem; margin-right: 0.2rem; }
-    .quote-band cite { display: block; margin-top: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red-pale); font-style: normal; }
-
-    .full-article { position: relative; z-index: 5; max-width: 1200px; margin: 0 auto 3rem; padding: 2.5rem 2rem 0; display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; border-top: 1px solid var(--grey-mid); }
-    .full-article-label { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; color: var(--red-deep); line-height: 1; font-style: italic; opacity: 0.5; }
-    .full-article-content h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900; color: var(--white-pure); line-height: 1.2; margin-bottom: 0.8rem; }
-    .full-article-content h2 em { color: var(--red-pale); }
-    .full-article-content p { font-size: 0.9rem; line-height: 1.8; color: var(--grey-light); margin-bottom: 0.8rem; }
-
-    footer { position: relative; z-index: 5; background: var(--grey-dark); border-top: 3px solid var(--red-deep); padding: 3rem 2rem 1.5rem; }
-    .footer-inner { max-width: 1200px; margin: 0 auto; }
-    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 2rem; }
-    .footer-brand .logo-title { font-size: 1.8rem; margin-bottom: 0.5rem; }
-    .footer-brand p { font-size: 0.8rem; color: var(--grey-light); line-height: 1.6; margin-top: 0.8rem; }
-    .footer-col h4 { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red-mid); margin-bottom: 1rem; }
-    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-    .footer-col ul li a { font-size: 0.82rem; color: var(--grey-light); text-decoration: none; transition: color 0.2s; }
-    .footer-col ul li a:hover { color: var(--red-pale); }
-    .footer-bottom { border-top: 1px solid var(--grey-mid); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; color: #444; letter-spacing: 0.05em; }
-    .footer-bottom a { color: var(--red-deep); text-decoration: none; }
-
-    .redacted { background: var(--red-deep); color: transparent; border-radius: 2px; user-select: none; cursor: not-allowed; }
-
-    .fade-in { opacity: 0; transform: translateY(20px); animation: fadeIn 0.8s ease forwards; }
-    @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
-    .fade-in:nth-child(1) { animation-delay: 0.1s; }
-    .fade-in:nth-child(2) { animation-delay: 0.2s; }
-    .fade-in:nth-child(3) { animation-delay: 0.3s; }
-
-    .hero::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: rgba(139,0,0,0.3); animation: scanline 8s linear infinite; pointer-events: none; }
-    @keyframes scanline { 0% { top: 0; opacity: 0.5; } 100% { top: 100%; opacity: 0; } }
-
+    /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; }
-      .hero-sidebar { border-left: none; padding-left: 0; border-top: 1px solid var(--grey-mid); padding-top: 2rem; }
-      .card-grid { grid-template-columns: repeat(2, 1fr); }
-      .full-article { grid-template-columns: 1fr; }
-      .footer-top { grid-template-columns: 1fr 1fr; }
-      .footer-brand { grid-column: span 2; }
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+      .encyclopedia {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 24px 20px;
+      }
+      .sidebar {
+        padding: 24px 20px;
+      }
+      .letter-heading { font-size: 36px; }
     }
-    @media (max-width: 600px) {
-      .header-inner { grid-template-columns: 1fr; text-align: center; gap: 0.5rem; }
-      .header-author { text-align: center; }
-      .card-grid { grid-template-columns: 1fr; }
-      .footer-top { grid-template-columns: 1fr; }
-      .footer-brand { grid-column: span 1; }
-      nav { flex-wrap: wrap; gap: 1rem; }
+
+    @media (max-width: 480px) {
+      header { padding: 0 16px; }
+      .header-top { padding: 14px 0 10px; }
+      .nav-link { padding: 10px 14px; font-size: 10px; }
+      .encyclopedia { padding: 20px 16px; }
+      .sidebar { padding: 20px 16px; }
+      .entry-item a { font-size: 16px; padding: 12px 12px; }
+      .alpha-btn { width: 28px; height: 28px; font-size: 11px; }
     }
+
+    /* ── ANIMATIONS ── */
+    .letter-section {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.4s ease forwards;
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .letter-section:nth-child(1) { animation-delay: 0.05s; }
+    .letter-section:nth-child(2) { animation-delay: 0.1s; }
+    .letter-section:nth-child(3) { animation-delay: 0.15s; }
+    .letter-section:nth-child(4) { animation-delay: 0.2s; }
+    .letter-section:nth-child(5) { animation-delay: 0.25s; }
+    .letter-section:nth-child(6) { animation-delay: 0.3s; }
+
+    /* Hidden when searching */
+    .letter-section.hidden { display: none; }
+    .entry-item.hidden { display: none; }
   </style>
 </head>
 <body>
 
-  <div class="top-bar">⚠ The truth they don't want you to know — Read at your own risk ⚠</div>
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <span class="ticker-label">⚠ Breaking</span>
+    <span class="ticker-inner">
+      NEW ENTRY: Jesus Christ — Historical figure or constructed myth? &nbsp;///&nbsp;
+      AREA 51: Declassified documents reveal new details &nbsp;///&nbsp;
+      BOLSHEVISM: The revolution that changed the world &nbsp;///&nbsp;
+      FREEMASONRY: 300 years of secret rituals exposed &nbsp;///&nbsp;
+      NEW WORLD ORDER: The global elite and their agenda &nbsp;///&nbsp;
+      CONSPIRATORS.BLOG — The Truth Has No Expiry Date &nbsp;///&nbsp;
+    </span>
+  </div>
 
+  <!-- HEADER -->
   <header>
-    <div class="header-inner">
-      <div class="header-date">
-        <span id="live-date"></span><br>
-        <span style="color:#555;">EST. MMXXIV</span>
+    <div class="header-top">
+      <div>
+        <a href="/" class="site-title">Conspirators<span>.</span>blog</a>
+        <div class="site-tagline">The Conspiracist's Encyclopedia · Est. 2026</div>
       </div>
-      <div class="header-logo">
-        <a href="#" class="logo-title">Con<span>spira</span>tors<span style="color:var(--grey-mid);">.blog</span></a>
-        <div class="logo-tagline">The Conspiracist's Journal — For Conspiracists Worldwide</div>
-      </div>
-      <div class="header-author">
-        <span>Founded by</span>
-        <strong>Casix</strong>
-        <span style="margin-top:2px; display:block; font-size:0.6rem; color:#444;">EDITOR IN CHIEF</span>
+      <div class="header-meta">
+        <div>Founded by <strong>Casix</strong>, Editor in Chief</div>
+        <div>conspirators.blog</div>
+        <div><a href="/admin/">✦ Write an Article</a></div>
       </div>
     </div>
-    <nav>
-      <a href="#" class="active">Home</a>
-      <a href="#">Politics</a>
-      <a href="#">Religion</a>
-      <a href="#">Health</a>
-      <a href="#">Conspiracies</a>
-      <a href="#">Archive</a>
-      <a href="#">About</a>
+    <nav class="header-nav">
+      <a href="/" class="nav-link active">Encyclopedia</a>
+      <a href="#latest" class="nav-link">Latest</a>
+      <a href="#politics" class="nav-link">Politics</a>
+      <a href="#religion" class="nav-link">Religion</a>
+      <a href="#health" class="nav-link">Health</a>
+      <a href="#conspiracies" class="nav-link">Conspiracies</a>
+      <a href="/admin/" class="nav-link">Admin ↗</a>
     </nav>
   </header>
 
-  <div class="ticker-wrap" style="height:36px; position:relative;">
-    <div class="ticker-label">Breaking</div>
-    <div class="ticker-content" id="ticker">
-      <span>Vaccines contain 5G microchips — study censored by 11 governments</span>
-      <span>The Vatican has held cosmic secrets since 1472</span>
-      <span>Big Pharma pays mainstream media to bury the cancer cure</span>
-      <span>Area 51 is an underground base of the Galactic Freemasons</span>
-      <span>Chemtrails are engineered to suppress independent thought</span>
-      <span>The WHO redefined "pandemic" just 3 days before Covid was declared</span>
-      <span>The moon landing was filmed in a studio built by Stanley Kubrick</span>
-      <span>Global elites meet annually to decide which truths get suppressed</span>
-      <span>Vaccines contain 5G microchips — study censored by 11 governments</span>
-      <span>The Vatican has held cosmic secrets since 1472</span>
-      <span>Big Pharma pays mainstream media to bury the cancer cure</span>
-      <span>Area 51 is an underground base of the Galactic Freemasons</span>
-      <span>Chemtrails are engineered to suppress independent thought</span>
-      <span>The WHO redefined "pandemic" just 3 days before Covid was declared</span>
-      <span>The moon landing was filmed in a studio built by Stanley Kubrick</span>
-      <span>Global elites meet annually to decide which truths get suppressed</span>
-    </div>
-  </div>
+  <!-- MAIN -->
+  <div class="main-layout">
 
-  <section class="hero">
-    <div class="hero-main fade-in">
-      <div class="article-category">🔴 Exclusive</div>
-      <div class="hero-image-placeholder">
-        <svg class="eye-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <path d="M50 20 C20 20 5 50 5 50 C5 50 20 80 50 80 C80 80 95 50 95 50 C95 50 80 20 50 20Z" stroke="#8B0000" stroke-width="3" fill="none"/>
-          <circle cx="50" cy="50" r="15" fill="#8B0000" opacity="0.6"/>
-          <circle cx="50" cy="50" r="6" fill="#C0392B"/>
-          <path d="M50 10 L55 25 L45 25 Z" fill="#8B0000" opacity="0.4"/>
-          <line x1="50" y1="10" x2="50" y2="20" stroke="#8B0000" stroke-width="1" opacity="0.6"/>
-        </svg>
-        <div class="number">01</div>
-      </div>
-      <h1 class="hero-title">The Great Reset: who is <em>really</em> behind the global agenda of 2030?</h1>
-      <p class="hero-excerpt">Leaked documents, high-profile names and a silent roadmap toward total control of the world's population. We analyzed over 3,000 pages of declassified material no one was supposed to read.</p>
-      <a href="#" class="read-more">Read the full investigation →</a>
-    </div>
+    <!-- ENCYCLOPEDIA -->
+    <main class="encyclopedia">
 
-    <aside class="hero-sidebar">
-      <div class="sidebar-section-title">Featured</div>
-
-      <div class="sidebar-article fade-in">
-        <div class="article-category" style="background:var(--grey-mid); color:var(--red-pale);">Religion</div>
-        <h3>The hidden code inside John Paul II's papal encyclicals</h3>
-        <p>An algorithm developed by three Polish mathematicians reveals encrypted messages buried in 1980s papal texts.</p>
+      <div class="encyclopedia-header">
+        <h1>The Conspiracist's<br><em>Encyclopedia</em></h1>
+        <p>Browse all topics A–Z · Click any entry to read related articles</p>
       </div>
 
-      <div class="sidebar-article fade-in">
-        <div class="article-category" style="background:var(--grey-mid); color:var(--red-pale);">Health</div>
-        <h3>Fluoride in tap water: cognitive weapon or just a disinfectant?</h3>
-        <p>The same doses used across Europe have been illegal in Norway since 1976. Why is nobody talking about this?</p>
+      <!-- SEARCH -->
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          class="search-input"
+          id="searchInput"
+          placeholder="Search entries... (e.g. Area 51, Freemasonry)"
+          autocomplete="off"
+        />
       </div>
 
-      <div class="sidebar-article fade-in">
-        <div class="article-category" style="background:var(--grey-mid); color:var(--red-pale);">Politics</div>
-        <h3>Black funds, secret meetings and the lodge that runs Parliament</h3>
-        <p>The red thread connecting 47 MPs from opposing parties under a single hidden hand.</p>
+      <!-- ALPHABET QUICK NAV -->
+      <div class="alpha-nav" id="alphNav"></div>
+
+      <!-- ENTRIES -->
+      <div id="encyclopediaEntries"></div>
+
+    </main>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="sidebar-block">
+        <div class="sidebar-title">Latest Articles</div>
+        <div id="latestArticles">
+          <!-- Populated by JS or CMS -->
+          <div class="latest-article">
+            <span class="tag">EXCLUSIVE</span>
+            <a href="#">The Hidden Architects of the New World Order</a>
+            <div class="meta">Mar 19, 2026 · Conspiracies</div>
+          </div>
+          <div class="latest-article">
+            <span class="tag">INVESTIGATION</span>
+            <a href="#">Bolshevism and the Banking Elite: A Hidden Connection</a>
+            <div class="meta">Mar 18, 2026 · Politics</div>
+          </div>
+          <div class="latest-article">
+            <span class="tag">DOCUMENTS</span>
+            <a href="#">Area 51: What the Declassified Files Actually Say</a>
+            <div class="meta">Mar 17, 2026 · Conspiracies</div>
+          </div>
+          <div class="latest-article">
+            <span class="tag">ANALYSIS</span>
+            <a href="#">The Council of Nicaea and the Rewriting of Christianity</a>
+            <div class="meta">Mar 16, 2026 · Religion</div>
+          </div>
+        </div>
       </div>
+
+      <div class="sidebar-block">
+        <div class="sidebar-title">Quote of the Day</div>
+        <div class="quote-block">
+          <blockquote>"The individual is handicapped by coming face to face with a conspiracy so monstrous he cannot believe it exists."</blockquote>
+          <cite>— J. Edgar Hoover, FBI Director</cite>
+        </div>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="sidebar-title">Encyclopedia Stats</div>
+        <div class="stat-grid">
+          <div class="stat-item">
+            <span class="stat-number" id="statEntries">0</span>
+            <div class="stat-label">Entries</div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" id="statLetters">0</span>
+            <div class="stat-label">Letters</div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">∞</span>
+            <div class="stat-label">Truths</div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">0</span>
+            <div class="stat-label">Censored</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="sidebar-title">About</div>
+        <p style="font-size:15px; color: var(--light-gray); line-height:1.7;">
+          Conspirators.blog is an independent encyclopedia of suppressed history, hidden agendas, and alternative research. No ads. No censors. No agenda — except the truth.
+        </p>
+        <p style="margin-top:12px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--gray);">
+          Founded by <strong style="color:var(--white)">Casix</strong>, Editor in Chief.
+        </p>
+      </div>
+
     </aside>
-  </section>
-
-  <div class="section-divider">
-    <div class="line"></div>
-    <span class="label">Latest Revelations</span>
-    <div class="line" style="background: linear-gradient(90deg, transparent, var(--red-deep));"></div>
   </div>
 
-  <section class="card-grid">
-
-    <div class="card fade-in">
-      <div class="card-image"><div class="icon">🧬</div><div class="number">02</div></div>
-      <div class="card-body">
-        <div class="article-category">Health</div>
-        <h3>mRNA: the human DNA rewriting program nobody voted for</h3>
-        <p>The technology used in Covid vaccines existed since 2003. Who was funding it in silence for two decades?</p>
-        <div class="card-meta"><span>MAR 08, 2026</span><span class="tag">■ CENSORED</span></div>
-      </div>
-    </div>
-
-    <div class="card fade-in">
-      <div class="card-image"><div class="icon">⛪</div><div class="number">03</div></div>
-      <div class="card-body">
-        <div class="article-category">Religion</div>
-        <h3>The Prophecy of Malachy and the pope who will dissolve the Church in 2027</h3>
-        <p>Twelve centuries of prophetic chronology converge on the name of a South American cardinal.</p>
-        <div class="card-meta"><span>MAR 05, 2026</span><span class="tag">■ EXCLUSIVE</span></div>
-      </div>
-    </div>
-
-    <div class="card fade-in">
-      <div class="card-image"><div class="icon">🗳️</div><div class="number">04</div></div>
-      <div class="card-body">
-        <div class="article-category">Politics</div>
-        <h3>The 2024 European elections: the numbers that don't add up</h3>
-        <p>An independent statistical analysis reveals anomalies in 6 countries. The original data has vanished.</p>
-        <div class="card-meta"><span>MAR 01, 2026</span><span class="tag">■ ANALYSIS</span></div>
-      </div>
-    </div>
-
-    <div class="card fade-in">
-      <div class="card-image"><div class="icon">☁️</div><div class="number">05</div></div>
-      <div class="card-body">
-        <div class="article-category">Conspiracies</div>
-        <h3>Geoengineering: when clouds become an act of silent warfare</h3>
-        <p>Patents filed by three multinationals describe chemtrails with surgical precision. The documents are public.</p>
-        <div class="card-meta"><span>FEB 27, 2026</span><span class="tag">■ INVESTIGATION</span></div>
-      </div>
-    </div>
-
-    <div class="card fade-in">
-      <div class="card-image"><div class="icon">💉</div><div class="number">06</div></div>
-      <div class="card-body">
-        <div class="article-category">Health</div>
-        <h3>Big Pharma and the suppressed cure: the case of the vanished doctor</h3>
-        <p>In 2019 he patented a natural compound against pancreatic cancer. Three weeks later, he disappeared.</p>
-        <div class="card-meta"><span>FEB 22, 2026</span><span class="tag" style="color:var(--red-bright);">■ URGENT</span></div>
-      </div>
-    </div>
-
-    <div class="card fade-in">
-      <div class="card-image"><div class="icon">🌍</div><div class="number">07</div></div>
-      <div class="card-body">
-        <div class="article-category">Politics</div>
-        <h3>The WEF shadow government: who actually elected Schwab?</h3>
-        <p>An analysis of internal WEF appointments from 1971 to today. One single pattern emerges.</p>
-        <div class="card-meta"><span>FEB 18, 2026</span><span class="tag">■ DOCUMENTS</span></div>
-      </div>
-    </div>
-
-  </section>
-
-  <div class="quote-band">
-    <blockquote>The only difference between a conspiracy theory and the truth is about six months.</blockquote>
-    <cite>— Casix, Founder of Conspirators.blog</cite>
-  </div>
-
-  <div class="section-divider">
-    <div class="line"></div>
-    <span class="label">Deep Dive</span>
-    <div class="line" style="background: linear-gradient(90deg, transparent, var(--red-deep));"></div>
-  </div>
-
-  <section class="full-article">
-    <div>
-      <div class="full-article-label">In Depth</div>
-      <div style="margin-top:1rem;">
-        <div class="article-category">Conspiracies</div>
-        <br>
-        <span style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; color:var(--grey-light); letter-spacing:0.1em;">MAR 10, 2026 — 12 min read</span>
-      </div>
-    </div>
-    <div class="full-article-content">
-      <h2>The Eye That Never Sleeps: <em>Mass Surveillance and the Privacy Paradox of 2026</em></h2>
-      <p>Every click, every purchase, every conversation — even the ones offline. The silent data-harvesting infrastructure built over the past fifteen years has reached a scale even Orwell wouldn't have dared to imagine in 1984.</p>
-      <p>Documents obtained via FOIA requests in four different countries reveal a disturbing pattern: the same tech companies that claim to protect user privacy are providing monthly aggregated reports to government bodies, the full scope of which <span class="redacted">███████████████████</span> has never been made public.</p>
-      <p>The most unsettling part? No law was broken. The laws were simply written to allow it.</p>
-      <a href="#" class="read-more" style="margin-left:0;">Continue reading the full investigation →</a>
-    </div>
-  </section>
-
+  <!-- FOOTER -->
   <footer>
-    <div class="footer-inner">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <a href="#" class="logo-title" style="font-size:2rem;">Con<span>spira</span>tors<span style="color:var(--grey-mid);">.blog</span></a>
-          <div class="logo-tagline" style="margin-top:0.3rem; font-family:'IBM Plex Mono',monospace; font-size:0.62rem; letter-spacing:0.2em; color:var(--grey-light);">THE CONSPIRACIST'S JOURNAL — FOR CONSPIRACISTS WORLDWIDE</div>
-          <p>Founded by Casix. An independent journal exploring what mainstream media refuses to touch. All content is intended for informational and critical thinking purposes only.</p>
-        </div>
-        <div class="footer-col">
-          <h4>Categories</h4>
-          <ul>
-            <li><a href="#">Politics</a></li>
-            <li><a href="#">Religion</a></li>
-            <li><a href="#">Health</a></li>
-            <li><a href="#">Conspiracies</a></li>
-            <li><a href="#">Archive</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>The Blog</h4>
-          <ul>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Write for Us</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Newsletter</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© 2026 <a href="#">Conspirators.blog</a> — Founded by Casix. All rights reserved.</span>
-        <span>Made with 🔴 and a healthy dose of skepticism</span>
-      </div>
-    </div>
+    <div>© 2026 Conspirators.blog · Founded by Casix · <a href="/admin/">Admin Panel</a></div>
+    <div style="margin-top:8px; color: #555;">The only difference between a conspiracy theory and the truth is about six months.</div>
   </footer>
 
   <script>
-    const d = new Date();
-    document.getElementById('live-date').textContent =
-      d.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' }).toUpperCase();
+    // ═══════════════════════════════════════════════════════════════
+    // ENCYCLOPEDIA DATA
+    // ═══════════════════════════════════════════════════════════════
+    // HOW TO ADD NEW ENTRIES:
+    // Just add a new object to the `entries` array below.
+    // Format: { name: "Entry Name", tag: "CATEGORY", slug: "url-slug" }
+    // The page will auto-sort everything alphabetically!
+    // ═══════════════════════════════════════════════════════════════
 
-    const fadeEls = document.querySelectorAll('.fade-in');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.style.animationPlayState = 'running'; });
-    }, { threshold: 0.1 });
-    fadeEls.forEach(el => { el.style.animationPlayState = 'paused'; observer.observe(el); });
+    const entries = [
+      // A
+      { name: "Area 51", tag: "CONSPIRACIES", slug: "area-51" },
+      { name: "Ashkenazi Jews", tag: "HISTORY", slug: "ashkenazi-jews" },
 
-    const ticker = document.getElementById('ticker');
-    ticker.innerHTML += ticker.innerHTML;
-  </script>
-  <script>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-      if (!user) {
-        window.netlifyIdentity.on("login", () => {
-          document.location.href = "/admin/";
-        });
+      // B
+      { name: "Bolshevism", tag: "POLITICS", slug: "bolshevism" },
+      { name: "Bilderberg Group", tag: "CONSPIRACIES", slug: "bilderberg-group" },
+
+      // C
+      { name: "Communism", tag: "POLITICS", slug: "communism" },
+      { name: "CIA Black Sites", tag: "INVESTIGATION", slug: "cia-black-sites" },
+      { name: "Chemtrails", tag: "HEALTH", slug: "chemtrails" },
+      { name: "Council on Foreign Relations", tag: "POLITICS", slug: "council-on-foreign-relations" },
+
+      // D
+      { name: "Deep State", tag: "POLITICS", slug: "deep-state" },
+      { name: "Denver Airport Murals", tag: "CONSPIRACIES", slug: "denver-airport-murals" },
+
+      // F
+      { name: "Flat Earth", tag: "SCIENCE", slug: "flat-earth" },
+      { name: "Freemasonry", tag: "RELIGION", slug: "freemasonry" },
+      { name: "Federal Reserve", tag: "ECONOMICS", slug: "federal-reserve" },
+
+      // G
+      { name: "Geoengineering", tag: "HEALTH", slug: "geoengineering" },
+
+      // H
+      { name: "HAARP", tag: "SCIENCE", slug: "haarp" },
+      { name: "Hollywood Satanism", tag: "RELIGION", slug: "hollywood-satanism" },
+
+      // I
+      { name: "Illuminati", tag: "CONSPIRACIES", slug: "illuminati" },
+
+      // J
+      { name: "Jesus Christ", tag: "RELIGION", slug: "jesus-christ" },
+      { name: "JFK Assassination", tag: "HISTORY", slug: "jfk-assassination" },
+
+      // M
+      { name: "MK-Ultra", tag: "INVESTIGATION", slug: "mk-ultra" },
+      { name: "Moon Landing Hoax", tag: "SCIENCE", slug: "moon-landing-hoax" },
+      { name: "Masonic Symbolism", tag: "RELIGION", slug: "masonic-symbolism" },
+
+      // N
+      { name: "New World Order", tag: "CONSPIRACIES", slug: "new-world-order" },
+      { name: "Nikola Tesla Cover-up", tag: "SCIENCE", slug: "nikola-tesla" },
+
+      // P
+      { name: "Project MKUltra", tag: "INVESTIGATION", slug: "project-mkultra" },
+      { name: "Pizzagate", tag: "CONSPIRACIES", slug: "pizzagate" },
+
+      // R
+      { name: "Rothschild Dynasty", tag: "ECONOMICS", slug: "rothschild-dynasty" },
+      { name: "Roswell Incident", tag: "CONSPIRACIES", slug: "roswell-incident" },
+
+      // S
+      { name: "Shadow Government", tag: "POLITICS", slug: "shadow-government" },
+      { name: "Secret Societies", tag: "CONSPIRACIES", slug: "secret-societies" },
+
+      // T
+      { name: "Trilateral Commission", tag: "POLITICS", slug: "trilateral-commission" },
+
+      // V
+      { name: "Vatican Secrets", tag: "RELIGION", slug: "vatican-secrets" },
+      { name: "Vaccines & Big Pharma", tag: "HEALTH", slug: "vaccines-big-pharma" },
+
+      // W
+      { name: "World Economic Forum", tag: "POLITICS", slug: "world-economic-forum" },
+      { name: "Weather Modification", tag: "SCIENCE", slug: "weather-modification" },
+
+      // Z
+      { name: "Zionism", tag: "POLITICS", slug: "zionism" },
+    ];
+
+    // Tag colors
+    const tagColors = {
+      CONSPIRACIES: "#8B0000",
+      POLITICS: "#1a3a5c",
+      RELIGION: "#3d1a5c",
+      HEALTH: "#1a4a2a",
+      SCIENCE: "#1a3a4a",
+      ECONOMICS: "#4a3a1a",
+      HISTORY: "#3a2a1a",
+      INVESTIGATION: "#5c1a1a",
+    };
+
+    // ═══════════════════════════════════════════════════════════════
+    // BUILD ENCYCLOPEDIA
+    // ═══════════════════════════════════════════════════════════════
+    function buildEncyclopedia(filteredEntries) {
+      const container = document.getElementById('encyclopediaEntries');
+      const alphNav = document.getElementById('alphNav');
+      container.innerHTML = '';
+
+      // Group by first letter
+      const grouped = {};
+      filteredEntries.forEach(entry => {
+        const letter = entry.name[0].toUpperCase();
+        if (!grouped[letter]) grouped[letter] = [];
+        grouped[letter].push(entry);
+      });
+
+      // Sort each group alphabetically
+      Object.keys(grouped).forEach(letter => {
+        grouped[letter].sort((a, b) => a.name.localeCompare(b.name));
+      });
+
+      const letters = Object.keys(grouped).sort();
+
+      // Build alpha nav
+      alphNav.innerHTML = '';
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(letter => {
+        const btn = document.createElement('a');
+        btn.className = 'alpha-btn' + (grouped[letter] ? ' has-entries' : ' empty');
+        btn.textContent = letter;
+        if (grouped[letter]) {
+          btn.href = '#letter-' + letter;
+          btn.title = grouped[letter].length + ' entries';
+        }
+        alphNav.appendChild(btn);
+      });
+
+      // Update stats
+      document.getElementById('statEntries').textContent = filteredEntries.length;
+      document.getElementById('statLetters').textContent = letters.length;
+
+      // Build sections
+      letters.forEach((letter, i) => {
+        const section = document.createElement('div');
+        section.className = 'letter-section';
+        section.id = 'letter-' + letter;
+        section.style.animationDelay = (i * 0.05) + 's';
+
+        const count = grouped[letter].length;
+        section.innerHTML = `
+          <div class="letter-heading">
+            ${letter}
+            <small>${count} entr${count === 1 ? 'y' : 'ies'}</small>
+          </div>
+          <ul class="entry-list">
+            ${grouped[letter].map(entry => `
+              <li class="entry-item">
+                <a href="/topics/${entry.slug}/">
+                  <span class="entry-tag" style="background:${tagColors[entry.tag] || '#333'}">${entry.tag}</span>
+                  ${entry.name}
+                  <span class="entry-arrow">→</span>
+                </a>
+              </li>
+            `).join('')}
+          </ul>
+        `;
+        container.appendChild(section);
+      });
+
+      if (filteredEntries.length === 0) {
+        container.innerHTML = '<div style="padding:40px; text-align:center; color:var(--gray); font-family:IBM Plex Mono,monospace; font-size:13px;">No entries found. Try a different search term.</div>';
       }
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // SEARCH
+    // ═══════════════════════════════════════════════════════════════
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase().trim();
+      if (!q) {
+        buildEncyclopedia(entries);
+        return;
+      }
+      const filtered = entries.filter(e =>
+        e.name.toLowerCase().includes(q) || e.tag.toLowerCase().includes(q)
+      );
+      buildEncyclopedia(filtered);
     });
-  }
-</script>
+
+    // Initial build
+    buildEncyclopedia(entries);
+
+    // Netlify Identity redirect
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
 </body>
 </html>
