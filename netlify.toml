@@ -1,7 +1,19 @@
 [build]
   publish = "."
 
+# Admin panel
 [[redirects]]
   from = "/admin"
   to = "/admin/index.html"
+  status = 200
+
+# Encyclopedia topic pages — all served by the same template
+[[redirects]]
+  from = "/topics/:slug/"
+  to = "/topics/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/topics/:slug"
+  to = "/topics/index.html"
   status = 200
