@@ -6,36 +6,62 @@ media_folder: "uploads"
 public_folder: "/uploads"
 
 collections:
+
+  # ══════════════════════════════════════════════
+  # ARTICLES — write new articles here
+  # ══════════════════════════════════════════════
+  - name: "posts"
+    label: "✍ Articles"
+    folder: "content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["Politics", "Religion", "Health", "Conspiracies", "Science", "Economics", "History", "Investigation"]
+      - label: "Tag"
+        name: "tag"
+        widget: "select"
+        options: ["EXCLUSIVE", "CENSORED", "INVESTIGATION", "ANALYSIS", "DOCUMENTS", "URGENT"]
+      - label: "Topic (encyclopedia slug)"
+        name: "topic"
+        widget: "string"
+        hint: "Enter the topic slug this article belongs to, e.g. area-51 or illuminati"
+        required: false
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Cover Image", name: "thumbnail", widget: "image", required: false }
+      - { label: "Content", name: "body", widget: "markdown" }
+      - { label: "Featured on homepage", name: "featured", widget: "boolean", default: false }
+
+  # ══════════════════════════════════════════════
+  # ENCYCLOPEDIA — manage topics A-Z here
+  # ══════════════════════════════════════════════
   - name: "encyclopedia"
-    label: "Encyclopedia Data"
+    label: "📚 Encyclopedia Topics"
     editor:
       preview: false
     files:
       - file: "data/topics.json"
-        label: "Topics Overview"
+        label: "Topics List (A-Z)"
         name: "topics_overview"
         extension: "json"
         format: "json"
         fields:
-          - label: "Topics List"
+          - label: "Topics"
             name: "topics"
             widget: "list"
             fields:
-              - label: "Topic Name"
-                name: "name"
-                widget: "string"
-              - label: "URL Slug"
-                name: "slug"
-                widget: "string"
-                hint: "Must be lowercase with hyphens, e.g. 'area-51'"
+              - { label: "Topic Name", name: "name", widget: "string" }
+              - { label: "URL Slug", name: "slug", widget: "string", hint: "Lowercase with hyphens, e.g. area-51" }
               - label: "Category"
                 name: "tag"
                 widget: "select"
                 options: ["CONSPIRACIES", "POLITICS", "RELIGION", "HEALTH", "SCIENCE", "ECONOMICS", "HISTORY", "INVESTIGATION"]
-              - label: "Introduction"
-                name: "intro"
-                widget: "text"
-              - label: "Related Topics Slugs"
+              - { label: "Introduction", name: "intro", widget: "text" }
+              - label: "Related Topics"
                 name: "related"
                 widget: "list"
                 required: false
